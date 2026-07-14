@@ -1,5 +1,9 @@
-const statuses = ["Not sent", "Delivered", "Opened", "Claimed", "Expired", "Needs help"];
+import { NextResponse } from "next/server";
 
-export default function LegacyImportsPage() {
-  return <main className="claim-page"><section className="claim-card import-console"><p className="eyebrow">FOUNDER COMMAND CENTER · JOIN IT TRANSITION</p><h1>Legacy member claims.</h1><p className="lede">Import old members safely, review the staged data, and send each person a private link to complete their new EFF membership profile without duplicating their membership.</p><div className="import-steps"><article><b>01</b><h2>Upload & stage</h2><p>Map Join It columns, normalize email addresses, and flag missing or duplicate records before anything becomes live.</p></article><article><b>02</b><h2>Review & approve</h2><p>Confirm organization, membership type, chapter, historical dates, and current standing before approving the migration.</p></article><article><b>03</b><h2>Invite & support</h2><p>Send secure seven-day claim links, safely resend expired links, and help members who need assistance.</p></article></div><div className="claim-statuses">{statuses.map(status=><span key={status}><b>—</b>{status}</span>)}</div><div className="actions"><button className="secondary">Upload Join It CSV</button><button className="secondary">Review staged records</button><button className="primary">Send approved invitations</button><a className="secondary" href="/api/claims/export">Export unclaimed CSV</a></div><div className="claim-notice"><strong>Member claim experience</strong><p>Members verify their imported email, review prefilled information, complete missing fields, accept current agreements, choose privacy and communication preferences, and activate their existing membership. Every send, open, resend, claim, expiration, and staff action is recorded.</p></div><small>Live counts and actions activate after Supabase, Resend, and a reviewed import are configured.</small></section></main>;
-}
+export const jsonError = (message: string, status = 400) =>
+  NextResponse.json({ ok: false, error: message }, { status });
+
+export const requireEnv = (...names: string[]) => {
+  const missing = names.filter((name) => !process.env[name]);
+  if (missing.length) throw new Error(`Missing server configuration: ${missing.join(", ")}`);
+};
