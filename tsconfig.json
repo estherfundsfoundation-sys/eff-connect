@@ -36,6 +36,10 @@
     ".next/dev/types/**/*.ts"
   ],
   "exclude": [
-    "node_modules"
+    "node_modules",
+    "route (2).ts",
+    "route (3).ts",
+    "route (4).ts",
+    "http.ts"
   ]
 }
